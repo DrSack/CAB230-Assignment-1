@@ -5,6 +5,20 @@ import {AgGridReact} from "ag-grid-react"
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 
+let truth = true;
+
+const Notfound = [{
+  timestamp: "Not Found",
+    symbol: "Not Found",
+    name: "Not Found",
+    industry: "Not Found",
+    open: "Not Found",
+    high: "Not Found",
+    low: "Not Found",
+    close: "Not Found",
+    volumes: "Not Found",
+}]
+
 const techCompanies = [
   { label: "<Empty>", value: 0},
   { label: "Health Care", value: 1 },
@@ -63,33 +77,36 @@ function SearchBar(props) {
   );
 }
 
-function handleErrors(response) {
-  if (!response.ok) {
-      return false;
-  }
-  return response;
-}
-
 function fetchSymbols(symbol) {
     let url = `http://131.181.190.87:3000/stocks/${symbol}`;
-    return fetch(url).then(handleErrors)
-  .then((res) => res.json()).catch(error => ({
-    timestamp: "Not Found",
-    symbol: "Not Found",
-    name: "Not Found",
-    industry: "Not Found",
-    open: "Not Found",
-    high: "Not Found",
-    low: "Not Found",
-    close: "Not Found",
-    volumes: "Not Found",
-  }))
-  .then((res) => res)
-}
+    let statusNum;
 
+    return fetch(url).catch(e => console.log(e))
+  .then((res) => { 
+    statusNum = res.status;
+    return res.json()}).catch((error => console.log(error)))
+  .then((res) => {
+    if(res.error){
+      return {
+        status: statusNum,
+        error: res.error,
+        message: res.message,
+      }
+    }
+    else{
+      return res;
+    }
+  }).catch(() => {return {
+    status: 444,
+    error: true,
+    message: "Disconnected",
+  }})
+}
 
 function fetchStocks(filter) {
   let filtered = filter;
+  let statusNum;
+
   filtered = filtered.toString().replace(' ', '%20')
 
   let url = `http://131.181.190.87:3000/stocks/symbols`;
@@ -98,22 +115,44 @@ function fetchStocks(filter) {
     url = `http://131.181.190.87:3000/stocks/symbols?industry=${filtered}`;
   }
 
-    return fetch(url)
-  .then((res) => res.json())
-  .then((res) => res)
-  
+    return fetch(url).catch(error => console.log(error))
+  .then((res) => {statusNum = res.status; return res.json()}).catch((error => console.log(error)))
+  .then((res) => {
+    if(res.error){
+      return {
+        status: statusNum,
+        error: res.error,
+        message: res.message,
+      }
+    }
+    else{
+      return res;
+    }
+  }).catch(() => {return {
+    status: 444,
+    error: true,
+    message: "Disconnected",
+  }})
 }
 
 
 export const Stock = function() {
   const [filter, setfilter]= useState("<Empty>");
   const [symbol, setsymbol] = useState("");
+  const [error, seterror] = useState("");
+  const [error2, seterror2] = useState("");
 
   let [Stock, setStock] = useState([]);
     useEffect(() => {
       fetchStocks(filter)
-    .then((User) => {
-    setStock(User);
+    .then((Industry) => {
+      if(Industry.error === true){
+        seterror(`Status: ${Industry.status}--Error: ${Industry.message}`);
+      }
+      else{
+        seterror(``);
+        setStock(Industry);
+      }
     })  
   }, [filter]);
 
@@ -121,8 +160,21 @@ export const Stock = function() {
     useEffect(() => {
       fetchSymbols(symbol)
     .then((link) => {
-      let arr = [link];
-      setSymbolStock(arr);
+      if(link.error === true){
+        if(truth){
+          truth = false;
+        }
+        else{
+          seterror2(`Status: ${link.status}--Error: ${link.message}`);
+          setSymbolStock(Notfound);
+        }
+      }
+      else
+      {
+        seterror2(``);
+        let arr = [link];
+        setSymbolStock(arr);
+      }
     })  
   }, [symbol]);
 
@@ -131,11 +183,11 @@ export const Stock = function() {
     <div style={{background: "linear-gradient(to bottom, #FFFFFF -1%, #537895 100%)", paddingBottom: "13vh"}}>
       <br></br>
       <div className="ag-theme-balham" style={{height: "400px", width: "80%", margin: "auto"}}>
-      <h2 style={{textAlign: "left"}}>Stock Industry</h2>
+      <h2 style={{textAlign: "left"}}>Stock Industry<span style={{fontSize: "13px", textAlign: "right"}}>{error}</span></h2>
               <Select style={{display: "flex"}} options={techCompanies} defaultValue={techCompanies[0]} onChange={e => {
                 setfilter(e.label);
               }}/>
-              <AgGridReact columnDefs={Columns} rowData={Stock} pagination={true} suppressHorizontalScroll={true} onGridReady={function(params){
+              <AgGridReact columnDefs={Columns} rowData={Stock}  pagination={true} enableColResize={true} onGridReady={function(params){
                 let gridApi = params.api;
                 gridApi.sizeColumnsToFit();
               }}/>
@@ -143,9 +195,9 @@ export const Stock = function() {
         </div>
         <div className="ag-theme-balham" style={{height: "400px", width: "80%", margin: "auto", marginTop: "14vh"}}>
           <form style={{height: "400px", width: "100%", margin: "auto", marginTop: "14vh"}}>
-            <h2 style={{textAlign: "left"}}>Stock Symbol</h2>
+            <h2 style={{textAlign: "left"}}>Stock Symbol<span style={{fontSize: "13px", textAlign: "right"}}>{error2}</span></h2>
             <SearchBar onSubmit={setsymbol} />
-            <AgGridReact columnDefs={Columns2} rowData={SymbolStock} pagination={true} onGridReady={function(params){
+            <AgGridReact columnDefs={Columns2} rowData={SymbolStock} pagination={true} enableColResize={true} onGridReady={function(params){
                 let gridApi = params.api;
                 gridApi.sizeColumnsToFit();
               }}/>
