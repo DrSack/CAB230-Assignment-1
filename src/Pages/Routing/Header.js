@@ -21,9 +21,9 @@ export const HeaderComponent = function(props){
             height: "90px",
             lineHeight: "90px",
             textAlign: "left",}}>
-          <a href= "#0"style={{display: "flex", fontSize: "1.5vh"}} onClick={() => {SetTruth(true); props.onSubmit(Truth); props.onSubmit2("Login")}}>Login</a>
-          <a href= "#0" style={{display: "flex", fontSize: "2.3vh", marginLeft: "10px", marginRight: "10px"}}>|</a>
-          <a href= "#0" style={{display: "flex", fontSize: "1.5vh"}} onClick={() => {SetTruth(true); props.onSubmit(Truth); props.onSubmit2("Register")}}>Register</a>
+            <Link to="/" style={{display: "flex", fontSize: "1.5vh"}} onClick={() => {SetTruth(true); props.onSubmit(Truth); props.onSubmit2("Login"); props.onSubmit3("40%")}}>Login</Link>
+          <p style={{display: "flex", fontSize: "2.6vh", marginLeft: "10px", marginRight: "10px" ,color: "black"}}>|</p>
+            <Link to="/" style={{display: "flex", fontSize: "1.5vh"}} onClick={() => {SetTruth(true); props.onSubmit(Truth); props.onSubmit2("Register"); props.onSubmit3("40%")}}>Register</Link>
         </div>
       </div>
       

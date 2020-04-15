@@ -5,6 +5,6 @@ export const Stocks = function() {
   return (
     <div>
       <Stock/>
-        </div>
+    </div>
   );
 }
