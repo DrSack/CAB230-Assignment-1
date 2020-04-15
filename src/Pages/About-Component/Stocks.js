@@ -81,10 +81,10 @@ function fetchSymbols(symbol) {
     let url = `http://131.181.190.87:3000/stocks/${symbol}`;
     let statusNum;
 
-    return fetch(url).catch(e => console.log(e))
+    return fetch(url)
   .then((res) => { 
     statusNum = res.status;
-    return res.json()}).catch((error => console.log(error)))
+    return res.json()})
   .then((res) => {
     if(res.error){
       return {
@@ -108,15 +108,14 @@ function fetchStocks(filter) {
   let statusNum;
 
   filtered = filtered.toString().replace(' ', '%20')
-
   let url = `http://131.181.190.87:3000/stocks/symbols`;
 
   if(filter !== "<Empty>"){
     url = `http://131.181.190.87:3000/stocks/symbols?industry=${filtered}`;
   }
 
-    return fetch(url).catch(error => console.log(error))
-  .then((res) => {statusNum = res.status; return res.json()}).catch((error => console.log(error)))
+    return fetch(url)
+  .then((res) => {statusNum = res.status; return res.json()})
   .then((res) => {
     if(res.error){
       return {
@@ -162,7 +161,12 @@ export const Stock = function() {
     .then((link) => {
       if(link.error === true){
         if(truth){
-          truth = false;
+          if(link.status === 444){
+            seterror2(`Status: ${link.status}--Error: ${link.message}`);
+          }
+          else{
+            truth = false;
+          }
         }
         else{
           seterror2(`Status: ${link.status}--Error: ${link.message}`);

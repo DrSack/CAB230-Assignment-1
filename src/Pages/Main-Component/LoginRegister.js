@@ -1,9 +1,33 @@
 import React, { useState } from "react";
 
+function Post(Rego, Type){
+  const postRequest = {
+    method: "POST",
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(Rego)
+  }
+  if(Type === 'Login')
+  return fetch('http://131.181.190.87:3000/user/login', postRequest)
+  .then(response => response.json())
+  .then(res => res).catch(() => {return {
+    error: true,
+    message: "Disconnected",
+  }})
+  else{
+    return fetch('http://131.181.190.87:3000/user/register', postRequest)
+    .then(response => response.json())
+    .then(res => res).catch(() => {return {
+      error: true,
+      message: "Disconnected",
+    }})
+  }
+}
+
 export const LoginRegister = function(props){
     const [Truth, SetTruth] = useState(false);
     const [Email, SetEmail] = useState("");
     const [Password, SetPassword] = useState("");
+    const [Response, SetResponse] = useState("");
 
     function ConvertJSON(email,password){
         const obj = 
@@ -29,11 +53,23 @@ export const LoginRegister = function(props){
                 left: "41.7%",
                 }}>
                 <button style={{float: "left", height: "2.7vh", fontSize: "1.3vh", textAlign: "center", verticalAlign: "middle", margin: "0 auto"}}
-                onClick={() => {SetTruth(false); props.onSubmit(Truth); props.onOpacity("100%")}}
+                onClick={() => {SetResponse(""); SetTruth(false); props.onSubmit(Truth); props.onOpacity("100%")}}
                 >X</button>
       <form
         onSubmit={function(event) {
-          alert("Email: " + Email + " Password: " + Password);
+          Post(ConvertJSON(Email,Password),props.status)
+          .then((message) => {
+            if(message.error){
+              SetResponse(message.message);
+            }
+            else if(message.success){
+              SetResponse(message.message);
+            }
+            else{
+              props.onToken(message.token);
+              SetResponse("Successfully Logged In");
+            }
+          })
           event.preventDefault();
         }}
         style={{
@@ -70,7 +106,7 @@ export const LoginRegister = function(props){
             margin: "0 auto",
             fontSize: "1.3vh"
           }}
-          type="text"
+          type="password"
           onChange={e => SetPassword(e.target.value)}
         />
         <input
@@ -88,9 +124,8 @@ export const LoginRegister = function(props){
           }}
           type="submit"
           value={props.status}
-          onClick={() => console.log(ConvertJSON(Email,Password))}
         />
-        <footer style={{fontSize:"1.5vh", paddingTop: "2vh"}}>Powered by v88 Engine</footer>
+        <footer style={{fontSize:"1.3vh", paddingTop: "2vh", margin: "auto", textAlign:"center"}}>{Response}</footer>
       </form>
     </div>
           );

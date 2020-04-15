@@ -12,14 +12,15 @@ export default function App() {
   const [truth, settruth] = useState(false);
   const [state, setstate] = useState("");
   const [opa, setopa] = useState("100%");
+  const [Token, setToken] = useState("");
 
   return (
     <Router>
       <div className="App">
-      <LoginRegister onSubmit={settruth} True={truth} status={state} onOpacity={setopa}/>
+      <LoginRegister onSubmit={settruth} True={truth} status={state} onOpacity={setopa} onToken={setToken}/>
       <div style={{opacity: opa}}>
-        <HeaderComponent name1 ="Home"  name2 ="Stocks"  name3 ="Contact"  name4 ="Spaces" onSubmit={settruth} onSubmit2={setstate} onSubmit3={setopa}/>
-      <RoutingComponent onSubmit={settruth} onSubmit2={setstate} onSubmit3={setopa}/>
+        <HeaderComponent name1 ="Home"  name2 ="Stocks"  name3 ="Stocks(Auth)" onSubmit={settruth} onSubmit2={setstate} onSubmit3={setopa}/>
+      <RoutingComponent onSubmit={settruth} onSubmit2={setstate} onSubmit3={setopa} token={Token}/>
       <Footer/>
     </div>
     </div>

@@ -32,7 +32,7 @@ let style = {
     height: "90px",
     lineHeight: "90px",
     textAlign: "left",
-    width: "16%",
+    width: "25%",
     margin: "0 auto",
   }
 
