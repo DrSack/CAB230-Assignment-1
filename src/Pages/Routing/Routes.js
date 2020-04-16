@@ -4,7 +4,7 @@ import { Router, Switch, Route } from "react-router-dom";
 
 import {Home} from "../Home";
 import {Stocks} from "../Stocks";
-import {Spaces} from "../Spaces";
+import {StocksAuthed} from "../StocksAuth";
 
 import history from './History';
 
@@ -17,7 +17,7 @@ export const RoutingComponent = function(props){
                     onSubmit={e => props.onSubmit(e)} 
                     onSubmit2={e => props.onSubmit2(e)} 
                     onSubmit3={e => props.onSubmit3(e)}/>} />
-                    <Route path="/Spaces" render={(prop) => <Spaces {...prop} token={props.token}/>}/>
+                    <Route path="/StocksAuthed" render={(prop) => <StocksAuthed {...prop} token={props.token}/>}/>
                     <Route path="/Stocks" component={Stocks} />
                 </Switch>
             </Router>

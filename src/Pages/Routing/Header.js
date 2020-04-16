@@ -15,7 +15,7 @@ export const HeaderComponent = function(props){
       <div style={style.style}>
         <Link to="/" style={style.banner} onClick={() => history.push('/')}>{props.name1}</Link>
         <Link to="/Stocks" style={style.banner} onClick={() => history.push('/Stocks')}>{props.name2}</Link>
-        <Link to="/Spaces" style={style.banner}  onClick={() => history.push('/Spaces')}>{props.name3}</Link>
+        <Link to="/StocksAuthed" style={style.banner}  onClick={() => history.push('/StocksAuthed')}>{props.name3}</Link>
         <div style={{display: "flex", whiteSpace: "nowrap", float: "right", marginRight: "10vh",
             height: "90px",
             lineHeight: "90px",

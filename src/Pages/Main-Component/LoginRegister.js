@@ -11,14 +11,14 @@ function Post(Rego, Type){
   .then(response => response.json())
   .then(res => res).catch(() => {return {
     error: true,
-    message: "Disconnected",
+    message: "Can't connect to Server",
   }})
   else{
     return fetch('http://131.181.190.87:3000/user/register', postRequest)
     .then(response => response.json())
     .then(res => res).catch(() => {return {
       error: true,
-      message: "Disconnected",
+      message: "Can't connect to Server",
     }})
   }
 }

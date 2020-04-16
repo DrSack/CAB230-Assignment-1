@@ -5,7 +5,7 @@ import {AgGridReact} from "ag-grid-react"
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 
-let truth = true;
+import "bootstrap/dist/css/bootstrap.min.css"
 
 const Notfound = [{
   timestamp: "Not Found",
@@ -140,6 +140,7 @@ export const Stock = function() {
   const [symbol, setsymbol] = useState("");
   const [error, seterror] = useState("");
   const [error2, seterror2] = useState("");
+  const [truth, settruth] = useState(true);
 
   let [Stock, setStock] = useState([]);
     useEffect(() => {
@@ -165,7 +166,8 @@ export const Stock = function() {
             seterror2(`Status: ${link.status}--Error: ${link.message}`);
           }
           else{
-            truth = false;
+
+            settruth(false);
           }
         }
         else{
@@ -179,7 +181,8 @@ export const Stock = function() {
         let arr = [link];
         setSymbolStock(arr);
       }
-    })  
+    }) 
+     // eslint-disable-next-line
   }, [symbol]);
 
 
