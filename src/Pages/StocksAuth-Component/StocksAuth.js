@@ -5,6 +5,7 @@ import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import * as moment from 'moment';
 import {DateRange} from './DateRange'
 
+
 import "bootstrap/dist/css/bootstrap.min.css"
 
 const Notfound = [{
@@ -123,22 +124,25 @@ export const StocksAuth = function(props){
         getAuth(GetRequest,symbol,date)
         .then(res => {
           if(props.token === ""){
-            seterror("Please Login");
+            if(res.status === 444){
+              seterror(`Status: ${res.status}--Error: ${res.message}`);
+            }
+            else{
+              seterror("Please Login");
+            }
           }
           else{
-            if(res.error){
-              if(truth){
+            if(symbol === ""){
+              seterror("");
+            }
+            else if(res.error){
                 if(res.status === 444){
                   seterror(`Status: ${res.status}--Error: ${res.message}`);
                 }
-                else{
-                  settruth(false);
-                }
-            }
-            else{
-              seterror(`Status: ${res.status}--Error: ${res.message}`);
-              setStock(Notfound);
-            }
+              else{
+                  seterror(`Status: ${res.status}--Error: ${res.message}`);
+                  setStock(Notfound);
+              }
             }
             else{
             if(getType(res) === 'object'){
@@ -155,13 +159,13 @@ export const StocksAuth = function(props){
           }
         )
         // eslint-disable-next-line
-      }, [symbol, date, error, GetRequest, truth]);     
+      }, [symbol, date, error, GetRequest]);     
         
     
 
     return(
-    <div style={{background: "linear-gradient(to bottom, #FFFFFF -1%, #537895 100%)", paddingBottom: "13vh"}}>
-      <div style={{width: "80%", margin: "0 auto"}}>
+    <div style={{background: "linear-gradient(to bottom, #FFFFFF -1%, #537895 100%)", paddingBottom: "21vh"}}>
+      <div style={{width: "80%", margin: "0 auto", marginTop: "1%"}}>
       
         <div className="ag-theme-balham" style={{height: "500px", width: "100%", margin: "auto"}}>
         <h2 style={{textAlign: "left"}}>Stocks Authenticated<span style={{fontSize: "13px", textAlign: "right"}}>{error}</span></h2>

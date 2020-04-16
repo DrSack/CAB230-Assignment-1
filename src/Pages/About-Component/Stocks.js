@@ -5,6 +5,8 @@ import {AgGridReact} from "ag-grid-react"
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 
+import { Chart } from "react-google-charts";
+
 import "bootstrap/dist/css/bootstrap.min.css"
 
 const Notfound = [{
@@ -12,11 +14,11 @@ const Notfound = [{
     symbol: "Not Found",
     name: "Not Found",
     industry: "Not Found",
-    open: "Not Found",
-    high: "Not Found",
-    low: "Not Found",
-    close: "Not Found",
-    volumes: "Not Found",
+    open: 0,
+    high: 0,
+    low: 0,
+    close: 0,
+    volumes: 0,
 }]
 
 const techCompanies = [
@@ -38,18 +40,6 @@ const Columns = [
   { headerName: "Name", field: "name"},
   { headerName: "Symbol", field: "symbol"},
   { headerName: "Industry", field: "industry"},
-];
-
-const Columns2 = [
-  { headerName: "Timestamp", field: "timestamp"},
-  { headerName: "Symbol", field: "symbol"},
-  { headerName: "Name", field: "name"},
-  { headerName: "Industry", field: "industry"},
-  { headerName: "Open", field: "open"},
-  { headerName: "High", field: "high"},
-  { headerName: "Low", field: "low"},
-  { headerName: "Close", field: "close"},
-  { headerName: "Volumes", field: "volumes"},
 ];
 
 function SearchBar(props) {
@@ -142,6 +132,8 @@ export const Stock = function() {
   const [error2, seterror2] = useState("");
   const [truth, settruth] = useState(true);
 
+  
+
   let [Stock, setStock] = useState([]);
     useEffect(() => {
       fetchStocks(filter)
@@ -184,8 +176,6 @@ export const Stock = function() {
     }) 
      // eslint-disable-next-line
   }, [symbol]);
-
-
   return (
     <div style={{background: "linear-gradient(to bottom, #FFFFFF -1%, #537895 100%)", paddingBottom: "13vh"}}>
       <br></br>
@@ -204,9 +194,20 @@ export const Stock = function() {
           <form style={{height: "400px", width: "100%", margin: "auto", marginTop: "14vh"}}>
             <h2 style={{textAlign: "left"}}>Stock Symbol<span style={{fontSize: "13px", textAlign: "right"}}>{error2}</span></h2>
             <SearchBar onSubmit={setsymbol} />
-            <AgGridReact columnDefs={Columns2} rowData={SymbolStock} pagination={true} enableColResize={true} onGridReady={function(params){
-                let gridApi = params.api;
-                gridApi.sizeColumnsToFit();
+            <Chart
+              style={{float:"left", padding: "0px", margin: "0px", width: "100%", height: "350px"}}
+              chartType="Bar"
+              loader={<div>Loading Chart</div>}
+              data={[
+                [`Volumes: ${SymbolStock[0].volumes}`, 'Open', 'High', 'Low', 'Close'],
+                [`${SymbolStock[0].timestamp}`, SymbolStock[0].open, SymbolStock[0].high, SymbolStock[0].low, SymbolStock[0].close],
+              ]}
+              
+              options={{
+                chart: {
+                  title: `${SymbolStock[0].name}`,
+                  subtitle: `${SymbolStock[0].industry}`,
+                },
               }}/>
           </form>
         </div>
