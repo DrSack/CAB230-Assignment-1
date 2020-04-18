@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";//import dependencies
 import {AgGridReact} from "ag-grid-react"
 import {DateRange} from './DateRange'
+import { Chart } from "react-google-charts";//import chart
 import * as moment from 'moment';
 
 import "ag-grid-community/dist/styles/ag-grid.css";//Set styles
@@ -18,6 +19,25 @@ const Notfound = [{// set const JSON object to Not Found.
     close: "Not Found",
     volumes: "Not Found",
 }]
+
+function GenerateJSON(obj){
+  if(obj.length === 0){
+    return [
+      ['TimeFrame', 'Volume'],
+      ['Null', 0]
+    ];
+  }
+  else{
+    let purest = [
+      ['TimeFrame', 'Volume']
+    ]
+    obj.map((objk) => purest.push(
+      [objk.timestamp, objk.volumes]
+    ))
+    return purest;
+  }
+}
+
 
 /*
 Parameter: props=OnSubmit to pass value to StockAuth component.
@@ -76,7 +96,6 @@ const Columns = [// set const JSON to reflect the stock JSON object
   { headerName: "High", field: "high"},
   { headerName: "Low", field: "low"},
   { headerName: "Close", field: "close"},
-  { headerName: "Volumes", field: "volumes"},
 ];
 
 
@@ -188,14 +207,30 @@ export const StocksAuth = function(props){
     
 
     return(
-    <div style={{background: "linear-gradient(to bottom, #FFFFFF -1%, #537895 100%)", paddingBottom: "21vh"}}>
+    <div style={{background: "linear-gradient(to bottom, #FFFFFF -1%, #537895 100%)", paddingBottom: "50vh"}}>
       <div style={{width: "80%", margin: "0 auto", marginTop: "1%"}}>
-      
-        <div className="ag-theme-balham" style={{height: "500px", width: "100%", margin: "auto"}}>
+        <div className="ag-theme-balham" style={{height: "400px", width: "100%", margin: "auto"}}>
         <h2 style={{textAlign: "left"}}>Stocks Authenticated<span style={{fontSize: "13px", textAlign: "right"}}>{error}</span></h2>
         <SearchBar onSubmit={setsymbol} />
         <DateRange onDate={setdate}/>
         <AgGridReact columnDefs={Columns} rowData={Stock} pagination={true}/>
+        <Chart
+          width={'100%'}
+          height={'200px'}
+          chartType="LineChart"
+          loader={<div>Loading Chart</div>}
+          data={GenerateJSON(Stock)}
+          options={{
+            title: `Volume Quantity Timelapse`,
+            hAxis: {
+              title: 'Timelapse',
+            },
+            vAxis: {
+              title: 'Volume',
+            },
+          }}
+          rootProps={{ 'data-testid': '1' }}
+        />
         </div>
         </div>
       </div>
