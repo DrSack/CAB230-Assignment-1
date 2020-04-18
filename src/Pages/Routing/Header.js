@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState } from "react";// import all dependencies
 import * as style from '../../Styling/Styling';
 import history from '../Routing/History';
 import { Link } from "react-router-dom";
 
+/*
+Parameter: props=OnSubmit to open logRegister component.
+
+Display Navigation bar that has Link components that push towards different pages.
+
+Returns: Navigation bar
+*/
+
+
 export const HeaderComponent = function(props){
-  const [Truth, SetTruth] = useState(true);
+  const [Truth, SetTruth] = useState(true);//Set use state Truth
 
     return(
       <div style={style.style2}>

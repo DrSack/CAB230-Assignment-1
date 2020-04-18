@@ -1,4 +1,12 @@
-import React from "react";
+import React from "react";//import react
+
+/*
+  Parameters: Nothing
+
+  This is returns a Static design of the footer
+  
+  returns: footer design
+*/
 
 export const Footer = function(){
     return(

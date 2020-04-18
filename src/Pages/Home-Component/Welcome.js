@@ -1,8 +1,16 @@
-import React, { useState } from "react";
-import StockImage from "../../Images/stock-trade-image-png-3-original.png";
+import React, { useState } from "react";//import react
+import StockImage from "../../Images/stock-trade-image-png-3-original.png";//import images
+
+/*
+  Parameters: props= set OnSubmit props to send data towards LoginRegisters
+
+  Displays Welcome page including a get started button which displays overlay
+
+  Return: The Welcome page 
+*/
 
 export const Welcome = function(props){
-  const [Truth, SetTruth] = useState(true);
+  const [Truth, SetTruth] = useState(true);//Set truth use state.
   
   return(
     <div style={{height: "91vh", background: "linear-gradient(to bottom, #FFFFFF -1%, #537895 100%)", fontFamily:"Titillium Web"}}>
@@ -33,7 +41,7 @@ export const Welcome = function(props){
         width: "30vh",
         fontWeight: "bold",
           }}
-        onClick={() => {SetTruth(true); props.onSubmit(Truth); props.onSubmit2("Register"); props.onSubmit3("40%")}}
+        onClick={() => {SetTruth(true); props.onSubmit(Truth); props.onSubmit2("Register"); props.onSubmit3("40%")}}// Change props when button is clicked.
           >Get Started</button>
     </div>
   )

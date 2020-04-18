@@ -1,7 +1,13 @@
-import React, {useState} from "react";
+import React, {useState} from "react";//import dependencies
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 
+/*
+Parameter: props=onDate to pass date value to StocksAuth.
 
+Display DateRangePicker and send onDate props to StocksAuth.
+
+Returns: Datepicker component.
+*/
 
 export const DateRange = function(props){
     const [date, setdate] = useState(null);

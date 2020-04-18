@@ -1,4 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from "react";//import react and use state
+
+/*
+Parameter: Rego= Takes Json Object, Type=String either Login or Register
+
+Sends a post request to API, and waits for response, or catch an error if cant connect.
+This function allows the user to login or register into the server.
+
+
+Returns: JSON Object with message, Error Message, or JWT Token.
+*/
 
 function Post(Rego, Type){
   const postRequest = {
@@ -23,8 +33,18 @@ function Post(Rego, Type){
   }
 }
 
+/*
+Parameter: props=passes data from component
+
+Component displays the login overlay and allows the user to input their
+email and password, to then be sent to the server in which they are authenticated or denied.
+
+Returns: The Register/Login Overlay. Or nothing if the props.True is false.
+*/
+
+
 export const LoginRegister = function(props){
-    const [Truth, SetTruth] = useState(false);
+    const [Truth, SetTruth] = useState(false);//Set use states
     const [Email, SetEmail] = useState("");
     const [Password, SetPassword] = useState("");
     const [Response, SetResponse] = useState("");
@@ -38,11 +58,11 @@ export const LoginRegister = function(props){
         return obj;
     }
     
-    if(!props.True){
+    if(!props.True){// return nothing is false
         return null;
     }
 
-    if(props.True === true){
+    if(props.True === true){// Return overlay if true
         return(
             <div style={{height: "1vh",
                 width: "0",
@@ -56,18 +76,18 @@ export const LoginRegister = function(props){
                 onClick={() => {SetResponse(""); SetTruth(false); props.onSubmit(Truth); props.onOpacity("100%")}}
                 >X</button>
       <form
-        onSubmit={function(event) {
+        onSubmit={function(event) {//If the form is submitted
           Post(ConvertJSON(Email,Password),props.status)
           .then((message) => {
-            if(message.error){
-              SetResponse(message.message);
+            if(message.error){//Check if error === true
+              SetResponse(message.message);// Then set response.
             }
-            else if(message.success){
-              SetResponse(message.message);
+            else if(message.success){//if success === true
+              SetResponse(message.message);//Set response
             }
-            else{
-              props.onToken(message.token);
-              SetResponse("Successfully Logged In");
+            else{//success on login
+              props.onToken(message.token);//Set props to token
+              SetResponse("Successfully Logged In");//Set response to succesful login
             }
           })
           event.preventDefault();
@@ -96,7 +116,7 @@ export const LoginRegister = function(props){
            fontSize: "1.3vh"
           }}
           type="text"
-          onChange={e => SetEmail(e.target.value)}
+          onChange={e => SetEmail(e.target.value)}//Set email to onChange value.
         />
         <input
         placeholder="Password"
@@ -107,7 +127,7 @@ export const LoginRegister = function(props){
             fontSize: "1.3vh"
           }}
           type="password"
-          onChange={e => SetPassword(e.target.value)}
+          onChange={e => SetPassword(e.target.value)}//Set password to onChange value.
         />
         <input
           style={{
