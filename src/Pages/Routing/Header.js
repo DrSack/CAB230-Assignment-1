@@ -15,6 +15,30 @@ Returns: Navigation bar
 export const HeaderComponent = function(props){
   const [Truth, SetTruth] = useState(true);//Set use state Truth
 
+    if(props.Token!==""){
+      return(
+      <div style={style.style2}>
+        <div style={{width: "100%"}}>
+        <div style={style.style3}>
+          <p style={{fontSize: "2.5vh", fontWeight: "bold"}}>Massive Stonks LTD</p>
+        </div>
+      <div style={style.style}>
+        <Link to="/" style={style.banner} onClick={() => history.push('/')}>{props.name1}</Link>
+        <Link to="/Stocks" style={style.banner} onClick={() => history.push('/Stocks')}>{props.name2}</Link>
+        <Link to="/StocksAuthed" style={style.banner}  onClick={() => history.push('/StocksAuthed')}>{props.name3}</Link>
+        <div style={{display: "flex", whiteSpace: "nowrap", float: "right", marginRight: "10vh",
+            height: "90px",
+            lineHeight: "90px",
+            textAlign: "left",}}>
+            <Link to="/" style={{display: "flex", fontSize: "1.5vh"}} onClick={() => {props.onToken("")}}>Sign Out</Link>
+        </div>
+      </div>
+      
+      </div>
+      </div>
+      )
+    }
+
     return(
       <div style={style.style2}>
         <div style={{width: "100%"}}>

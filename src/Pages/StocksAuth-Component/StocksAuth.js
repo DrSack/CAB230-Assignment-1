@@ -20,7 +20,7 @@ const Notfound = [{// set const JSON object to Not Found.
     volumes: 0,
 }]
 
-function GenerateJSON(obj){
+function GenerateJSON(obj){//Check object length and return specific ararys
   if(obj.length === 0){
     return [
       ['TimeFrame', 'Volume'],
@@ -169,7 +169,8 @@ export const StocksAuth = function(props){
               seterror(`Status: ${res.status}--Error: ${res.message}`);
             }
             else{
-              seterror("Please Login");
+              seterror("Please Login to access Authenticated Stocks");
+              setStock(Notfound);
             }
           }
           else{

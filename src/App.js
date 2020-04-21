@@ -30,7 +30,7 @@ export default function App() {//Declare all usestates to be passed.
       <div className="App">
       <LoginRegister onSubmit={settruth} True={truth} status={state} onOpacity={setopa} onToken={setToken}/>
       <div style={{opacity: opa}}>
-        <HeaderComponent name1 ="Home"  name2 ="Stocks"  name3 ="Stocks(Auth)" onSubmit={settruth} onSubmit2={setstate} onSubmit3={setopa}/>
+        <HeaderComponent name1 ="Home"  name2 ="Stocks"  name3 ="Stocks(Auth)" onSubmit={settruth} onSubmit2={setstate} onSubmit3={setopa} Token={Token} onToken={setToken}/>
       <RoutingComponent onSubmit={settruth} onSubmit2={setstate} onSubmit3={setopa} token={Token}/>
       <Footer/>
     </div>
