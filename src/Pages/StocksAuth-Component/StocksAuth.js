@@ -9,7 +9,7 @@ import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import "bootstrap/dist/css/bootstrap.min.css"
 
 const Notfound = [{// set const JSON object to Not Found.
-  timestamp: "Not Found",
+  timestamp: "Null",
     symbol: "Not Found",
     name: "Not Found",
     industry: "Not Found",
@@ -17,11 +17,17 @@ const Notfound = [{// set const JSON object to Not Found.
     high: "Not Found",
     low: "Not Found",
     close: "Not Found",
-    volumes: "Not Found",
+    volumes: 0,
 }]
 
 function GenerateJSON(obj){
   if(obj.length === 0){
+    return [
+      ['TimeFrame', 'Volume'],
+      ['Null', 0]
+    ];
+  }
+  else if(obj.error){
     return [
       ['TimeFrame', 'Volume'],
       ['Null', 0]
@@ -108,9 +114,13 @@ Provides the symbol, the token in the GetRequest JSON, and date object
 Returns: JSON object of either a successful pull or an error.
 */
 
-function getAuth(GetRequest, symbol, date){
+function getAuth(token, symbol, date){
   let url = `http://131.181.190.87:3000/stocks/authed/${symbol}`;
   let statusNum; let date1; let date2; 
+
+  let GetRequest = {
+    headers: {'Authorization': `Bearer ${token}`},
+  }
 
   try{
     date1 = moment(date[0]).format('YYYY-MM-DD')
@@ -148,23 +158,11 @@ Returns: JSON object of either a successful pull or an error.
 export const StocksAuth = function(props){
   const [symbol, setsymbol] = useState("");//Set usestates
   const [error, seterror] = useState("");
-  const [truth, settruth] = useState(true);
   const [date, setdate] = useState(null);
-
-    const GetRequest = {
-        headers: {'Authorization': `Bearer ${props.token}`},
-    }
     
-    let [Stock, setStock] = useState([]);
-    useEffect(() => {
-      setsymbol(symbol);
-      seterror(error);
-      settruth(truth);
-      setdate(date);
-      // eslint-disable-next-line
-    }, [symbol, date, error, GetRequest]);  
+    let [Stock, setStock] = useState([]); 
       useEffect(() => {
-        getAuth(GetRequest,symbol,date)
+        getAuth(props.token,symbol,date)
         .then(res => {
           if(props.token === ""){//If no token is present dont set anything
             if(res.status === 444){//If disconnected
@@ -201,11 +199,8 @@ export const StocksAuth = function(props){
           }
           }
         )
-        // eslint-disable-next-line
-      }, [symbol, date, error, GetRequest]);     
+      }, [symbol,date,props.token]);     
         
-    
-
     return(
     <div style={{background: "linear-gradient(to bottom, #FFFFFF -1%, #537895 100%)", paddingBottom: "50vh"}}>
       <div style={{width: "80%", margin: "0 auto", marginTop: "1%"}}>
