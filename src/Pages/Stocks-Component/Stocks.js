@@ -36,9 +36,9 @@ const techCompanies = [// Set const JSON for selecting industries
 ];
 
 const Columns = [// Define columns
-  { headerName: "Name", field: "name"},
-  { headerName: "Symbol", field: "symbol"},
-  { headerName: "Industry", field: "industry"},
+  { headerName: "Name", field: "name", sortable: true, filter: true},
+  { headerName: "Symbol", field: "symbol", sortable: true},
+  { headerName: "Industry", field: "industry", sortable: true},
 ];
 
 /*
