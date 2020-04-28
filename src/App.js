@@ -4,7 +4,6 @@ import { BrowserRouter as Router} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Import  components and styling.
-import "./App.css";
 import {HeaderComponent} from './Pages//Routing/Header';
 import {LoginRegister} from './Pages/Main-Component/LoginRegister'
 import {Footer} from './Pages/Main-Component/Footer'

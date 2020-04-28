@@ -21,6 +21,19 @@ const Notfound = [{// set const JSON object to Not Found.
 }]
 
 function GenerateJSON(obj){//Check object length and return specific ararys
+  if(obj.length === 0){
+    return [
+      ['TimeFrame', 'Volume'],
+      ['Null', 0]
+    ];
+  }
+  else if(obj.error){
+    return [
+      ['TimeFrame', 'Volume'],
+      ['Null', 0]
+    ];
+  }
+  else{
     let purest = [
       ['TimeFrame', 'Volume']
     ]
@@ -28,7 +41,7 @@ function GenerateJSON(obj){//Check object length and return specific ararys
       [objk.timestamp, objk.volumes]
     ))
     return purest;
-
+  }
 }
 
 

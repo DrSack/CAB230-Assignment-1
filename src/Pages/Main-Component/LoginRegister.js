@@ -73,7 +73,7 @@ export const LoginRegister = function(props){
                 left: "41.7%",
                 }}>
                 <button style={{float: "left", height: "2.7vh", fontSize: "1.3vh", textAlign: "center", verticalAlign: "middle", margin: "0 auto"}}
-                onClick={() => {SetResponse(""); SetTruth(false); props.onSubmit(Truth); props.onOpacity("100%")}}
+                onClick={() => {SetResponse(""); SetTruth(false); props.onSubmit(Truth); props.onOpacity("100%");SetEmail("");SetPassword("");}}
                 >X</button>
       <form
         onSubmit={function(event) {//If the form is submitted

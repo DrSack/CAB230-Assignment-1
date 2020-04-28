@@ -13,7 +13,7 @@ export const Welcome = function(props){
   const [Truth, SetTruth] = useState(true);//Set truth use state.
   
   return(
-    <div style={{height: "91vh", background: "linear-gradient(to bottom, #FFFFFF -1%, #537895 100%)", fontFamily:"Titillium Web"}}>
+    <div style={{height: "91vh", background: "linear-gradient(to bottom, #FFFFFF -1%, #537895 100%)", fontFamily:"Titillium Web", textAlign: "center"}}>
           <p></p>
         <div style={{display: "flex", marginTop: "10vh"}}>
           <div style={{width: "70%", margin: "0 auto"}}>

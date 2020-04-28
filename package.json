@@ -9,19 +9,16 @@
     "@wojtekmaj/react-daterange-picker": "^2.5.0",
     "ag-grid-community": "^23.0.2",
     "ag-grid-react": "^23.0.3",
-    "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "history": "^4.10.1",
     "moment": "^2.24.0",
     "react": "^16.13.0",
-    "react-autosuggest": "^10.0.0",
-    "react-bootstrap": "^1.0.0",
     "react-daterange-picker": "^2.0.1",
     "react-dom": "^16.13.0",
     "react-google-charts": "^3.0.15",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "react-select": "^3.1.0",
-    "reactstrap": "^8.4.1"
+    "react-select": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
