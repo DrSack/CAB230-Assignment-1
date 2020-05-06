@@ -98,10 +98,10 @@ const Columns = [// set const JSON to reflect the stock JSON object
   { headerName: "Symbol", field: "symbol"},
   { headerName: "Name", field: "name"},
   { headerName: "Industry", field: "industry"},
-  { headerName: "Open", field: "open"},
-  { headerName: "High", field: "high"},
-  { headerName: "Low", field: "low"},
-  { headerName: "Close", field: "close"},
+  { headerName: "Open", field: "open", sortable: true},
+  { headerName: "High", field: "high", sortable: true},
+  { headerName: "Low", field: "low", sortable: true},
+  { headerName: "Close", field: "close", sortable: true},
 ];
 
 
