@@ -65,7 +65,7 @@ function SearchBar(props) {
       <button
         id="search-button"
         type="button"
-        onClick={() => props.onSubmit(innerSearch)}
+        onClick={() => {if(innerSearch === ""){ alert("Please provide valid input")} else return props.onSubmit(innerSearch)}}
         style={{width: "10%"}}
       >
         Search
@@ -197,6 +197,9 @@ export const Stock = function() {
       else
       {//Else If response successful
         seterror2(``);
+        let str = link.timestamp;
+        let split = str.slice(0,10);
+        link.timestamp = split;
         let arr = [link];
         setSymbolStock(arr);
       }

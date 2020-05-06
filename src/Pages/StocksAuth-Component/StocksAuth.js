@@ -50,6 +50,8 @@ Parameter: props=OnSubmit to pass value to StockAuth component.
 
 Send onChange value of input and pass through this component.
 
+CODE SNIPPET INSPIRED FROM ReactSearch.pdf within QUT BlackBoard.
+
 Returns: Input bar and button component.
 */
 
@@ -69,7 +71,7 @@ function SearchBar(props) {
       <button
         id="search-button"
         type="button"
-        onClick={() => props.onSubmit(innerSearch)}
+        onClick={() => {if(innerSearch === ""){ alert("Please provide valid input")} else return props.onSubmit(innerSearch)}}
         style={{width: "10%"}}
       >
         Search
@@ -83,6 +85,9 @@ Parameter: p=pass either array, typeof, or object
 
 Pass in either array, typeof, or object
 
+CODE SNIPPET INSPIRED FROM Stack Overflow
+@ref: https://stackoverflow.com/questions/11182924/how-to-check-if-javascript-object-is-json
+
 Returns: string value to determine type of variable
 */
 
@@ -94,7 +99,7 @@ function getType(p) {
 }
 
 const Columns = [// set const JSON to reflect the stock JSON object
-  { headerName: "Timestamp", field: "timestamp"},
+  { headerName: "Date", field: "timestamp"},
   { headerName: "Symbol", field: "symbol"},
   { headerName: "Name", field: "name"},
   { headerName: "Industry", field: "industry"},
@@ -152,7 +157,7 @@ Parameter: props=props.token is passed down from the App.js component
 
 Returns Ag-grid components that displays stocks for authenticated users for specific Industries Symbols and a timelapse. 
 
-Returns: JSON object of either a successful pull or an error.
+Returns: Displays the Ag-grid and Google Charts for Authenticated Stocks.
 */
 
 export const StocksAuth = function(props){
@@ -190,10 +195,17 @@ export const StocksAuth = function(props){
             if(getType(res) === 'object'){//If single object
               seterror("");
               let arr = [res];
+              arr.reverse();
               setStock(arr);
             }
             else if(getType(res) === 'array'){//If Multiple objects
               seterror("");
+              for(let i = 0; i < res.length; i++){//modify the timestamp to online display the date
+                let str = res[i].timestamp;
+                let split = str.slice(0,10);
+                res[i].timestamp = split;
+              }
+              res.reverse();//reverse the order to display correctly within timeline
               setStock(res);
             }
             }
@@ -217,6 +229,7 @@ export const StocksAuth = function(props){
           loader={<div>Loading Chart</div>}
           data={GenerateJSON(Stock)}
           options={{
+            pointSize: 10,
             title: `Volume Quantity Timelapse`,
             hAxis: {
               title: 'Timelapse',
