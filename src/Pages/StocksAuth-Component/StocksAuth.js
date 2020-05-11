@@ -194,6 +194,9 @@ export const StocksAuth = function(props){
             else{//If successful
             if(getType(res) === 'object'){//If single object
               seterror("");
+              let str = res.timestamp;
+              let split = str.slice(0,10);
+              res.timestamp = split;
               let arr = [res];
               arr.reverse();
               setStock(arr);
