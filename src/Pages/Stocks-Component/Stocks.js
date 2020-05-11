@@ -23,7 +23,7 @@ const Notfound = [{// set const JSON
 const techCompanies = [// Set const JSON for selecting industries
   { label: "<Empty>", value: 0},
   { label: "Health Care", value: 1 },
-  { label: "Industrial", value: 2 },
+  { label: "Industrials", value: 2 },
   { label: "Consumer Discretionary", value: 3 },
   { label: "Information Technology", value: 4 },
   { label: "Consumer Staples", value: 5 },
